@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>El Tiempo</title>
+    <link rel="shortcut icon" href="https://www.el-tiempo.net/themes/eltiempo-theme/assets/img/logo.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-transparent">
+      <div class="container-fluid">
+        <img class="navbar-brand" src="https://www.el-tiempo.net/themes/eltiempo-theme/assets/img/logo.png" width="50" height="60"></img>
+        <span itemprop="name">El Tiempo</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="calculadora.html">Calculadora</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="tiempo.html">El Tiempo</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <h1>Consulta de Temperaturas</h1>
+      <br>
+      <div class="form-group">
+          <input type="text" class="form-control" id="city" placeholder="Introduce una ciudad española">
+      </div>
+      <br>
+      <button type="button" class="btn btn-primary" onclick="getWeather()">Buscar</button>
+      <div id="weatherResults" class="mt-4"></div>
+      <div id="notFound"></div>
+      
+    </div>
+
+    <br>
+
+    
+
+    <div class="container">
+      <h1>Municipios destacados</h1>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card h-100">
+            <img class="card-img-top" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.gannett-cdn.com%2F-mm-%2Fad61cf8b67405cf0c5c8b32eb0f5566e16bc4283%2Fc%3D0-88-2154-1305%2Flocal%2F-%2Fmedia%2F2018%2F03%2F08%2FUSATODAY%2FUSATODAY%2F636561254134486104-GettyImages-626781150.jpg%3Fwidth%3D3200%26height%3D1680%26fit%3Dcrop&f=1&nofb=1&ipt=ec411baa398922c3d723e9761904b1f0eabc2f7cb91c88bcab6f828852b236a6&ipo=images" alt="Barcelona" width="100" height="200">
+            <div class="card-body">
+              <h5 class="card-title">Barcelona</h5>
+              <p class="card-text">Despejado</p>
+              <p class="card-text">Máximas: 23 °C</p>
+              <p class="card-text">Mínimas: 15 °C</p>
+              <a href="https://www.el-tiempo.net/provincias/08/municipios/08019" class="btn btn-primary">Prevision semanal</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img class="card-img-top" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp1916446.jpg&f=1&nofb=1&ipt=ae57a09e06cf6b89d23a9248b3e90ffeeb1d09c273a00495aee8aa4530ed6c32&ipo=images" alt="madrid" width="100" height="200">
+            <div class="card-body">
+              <h5 class="card-title">Madrid</h5>
+              <p class="card-text">Nubes altas</p>
+              <p class="card-text">Máximas: 22 °C</p>
+              <p class="card-text">Mínimas: 8 °C</p>
+              <a href="https://www.el-tiempo.net/provincias/28/municipios/28079" class="btn btn-primary">Prevision semanal</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img class="card-img-top" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgotenerife.net%2Fwp-content%2Fuploads%2F2021%2F08%2Fpuerto-de-la-cruz-6.jpg&f=1&nofb=1&ipt=697df64ebbc614e63abab5989dc3d9b932c26082eb5be0892dbd02b133f103e6&ipo=images" alt="puertocruz" width="100" height="200">
+            <div class="card-body">
+              <h5 class="card-title">Puerto de la cruz</h5>
+              <p class="card-text">Muy nuboso</p>
+              <p class="card-text">Máximas: 22°C</p>
+              <p class="card-text">Mínimas: 18°C</p>
+              <a href="https://www.el-tiempo.net/provincias/38/municipios/38028" class="btn btn-primary">Prevision semanal</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    
+    <script>
+        function getWeather() {
+            var city = document.getElementById('city').value;
+            fetch('https://www.el-tiempo.net/api/json/v2/home')
+                .then(response => response.json())
+                .then(data => {
+                    data.ciudades.forEach(element => { 
+                      if (city == element.name){
+                        console.log(element.name);
+                        console.log(element.temperatures.max);
+                        var html = '<h3>Temperaturas en ' + city + '</h3>';
+                        html += '<p>Temperatura máxima: ' + element.temperatures.max + '°C</p>';
+                        html += '<p>Temperatura mínima: ' + element.temperatures.min + '°C</p>';
+                        document.getElementById('weatherResults').innerHTML = html;
+                        console.log(html);                        
+                      } else {
+                        document.getElementById('notFound').innerHTML = '<p>Ciudad no encontrada</p>';
+                      }
+                    });
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                    var html = '<h3>Temperaturas en ' + city + '</h3>';
+                    document.getElementById('weatherResults').innerHTML = '<p>Error al obtener los datos.</p>';
+                });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  </body>
+</html>
